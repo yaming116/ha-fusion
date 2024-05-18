@@ -1,0 +1,22 @@
+# File: .github/workflows/repo-sync.yml
+
+on:
+  schedule:
+  - cron:  "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: repo-sync
+      uses: repo-sync/github-sync@v2
+      with:
+        sync_tags: "true"
+        source_repo: "https://github.com/matt8707/ha-fusion"
+        source_branch: "main"
+        destination_branch: "main"
+        github_token: ${{ secrets.PAT }}
